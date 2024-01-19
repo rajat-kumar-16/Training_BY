@@ -6,12 +6,24 @@ interface Company{
 }
 abstract class Emp{
     Scanner sc= new Scanner(System.in);
-    int id,age;
-    String name;
-    float salary;
-    String designation;
+    public int id,age;
+    public String name;
+    private float salary;
+    private String designation;
     int raise;
 
+    void setSalary(float salary){
+        this.salary=salary;
+    }
+    float getSalary(){
+       return this.salary;
+    }
+    void setDesignation(String designation){
+        this.designation=designation;
+    }
+    String getDesignation(){
+        return this.designation;
+    }
     void assign(){
         System.out.print("Enter Id:");
         id=sc.nextInt();
@@ -45,8 +57,8 @@ abstract class Emp{
 final class Developer extends Emp implements Company{
 
     Developer(){
-        salary=50000;
-        designation="Developer";
+        setSalary(50000);
+        setDesignation("Developer");
         raise=15;
     }
     public void access(){
@@ -61,8 +73,8 @@ final class Developer extends Emp implements Company{
 final class Clerk extends Emp implements Company{
 
     Clerk(){
-        salary=10000;
-        designation="Clerk";
+        setSalary(10000);
+        setDesignation("Clerk");
         raise=5;
     }
     public void access(){
@@ -79,8 +91,8 @@ final class Clerk extends Emp implements Company{
 final class Manager extends Emp implements Company{
 
     Manager(){
-        salary=70000;
-        designation="Manager";
+        setSalary(70000);
+        setDesignation("Manager");
         raise=20;
     }
     public void access(){
@@ -95,8 +107,8 @@ final class Manager extends Emp implements Company{
 
 final class Tester extends Emp implements Company{
     Tester(){
-        salary=25000;
-        designation="Tester";
+        setSalary(25000);
+        setDesignation("Tester");
         raise=10;
     }
     public void access(){
@@ -118,106 +130,116 @@ class project{
     static Tester t= new Tester();
 
     public static void main(String[] args){
-        int opt1=0;
-        Scanner sc= new Scanner(System.in);
-        while(opt1!=5){
-            System.out.println("1) Create");
-            System.out.println("2) Display");
-            System.out.println("3) Raise salary");
-            System.out.println("4) Access");
-            System.out.println("5) EXIT");
-            opt1=sc.nextInt();
+        try{
+            int opt1=0;
+            Scanner sc= new Scanner(System.in);
+            while(opt1!=5){
+                System.out.println("1) Create");
+                System.out.println("2) Display");
+                System.out.println("3) Raise salary");
+                System.out.println("4) Access");
+                System.out.println("5) EXIT");
+                opt1=sc.nextInt();
 
-            if(opt1 == 1){
-                CreateDisplay(opt1);
-            }
-            if(opt1 == 2){
-                CreateDisplay(opt1);
-            }
-            if(opt1 == 3){
-                CreateDisplay(opt1);
-            }
-            if(opt1 == 4){
-                CreateDisplay(opt1);
-            }
-            if(opt1 == 5){
-                System.out.println("Thanks a lot!");
-                System.exit(0);
-            }
+                if(opt1 == 1){
+                    CreateDisplay(opt1);
+                }
+                if(opt1 == 2){
+                    CreateDisplay(opt1);
+                }
+                if(opt1 == 3){
+                    CreateDisplay(opt1);
+                }
+                if(opt1 == 4){
+                    CreateDisplay(opt1);
+                }
+                if(opt1 == 5){
+                    System.out.println("Thanks a lot!");
+                    System.exit(0);
+                }
 
+            }
+        }
+        catch(Exception e){
+            System.out.println("Enter a valid choice ");
         }
 
     }
 
     static void CreateDisplay(int opt1){
-        int opt2=0;
-        Scanner sc= new Scanner(System.in);
-        while(opt2!=5){
-            System.out.println(" ");
-            if(opt1==1)
-                System.out.println("Options for Create:");
-            if(opt1==2)
-                System.out.println("Options for Display:");
-            if(opt1==3)
-                System.out.println("Options for Raise Salary:");
-            if(opt1==4)
-                System.out.println("Options for Access:");
+        try{
+            int opt2=0;
+            Scanner sc= new Scanner(System.in);
+            while(opt2!=5) {
+                System.out.println(" ");
+                if (opt1 == 1)
+                    System.out.println("Options for Create:");
+                if (opt1 == 2)
+                    System.out.println("Options for Display:");
+                if (opt1 == 3)
+                    System.out.println("Options for Raise Salary:");
+                if (opt1 == 4)
+                    System.out.println("Options for Access:");
 
-            System.out.println("1) Developer");
-            System.out.println("2) Clerk");
-            System.out.println("3) Manager");
-            System.out.println("4) Tester");
-            System.out.println("5) EXIT");
+                System.out.println("1) Developer");
+                System.out.println("2) Clerk");
+                System.out.println("3) Manager");
+                System.out.println("4) Tester");
+                System.out.println("5) EXIT");
 
-            System.out.print("Choose the option... :");
-            opt2 = sc.nextInt();
-            if(opt2 == 1){
-                if(opt1==1)
-                    d.assign();
-                if(opt1==2)
-                    d.display();
-                if(opt1==3)
-                    d.raiseSalary();
-                if(opt1==4)
-                    d.access();
+                System.out.print("Choose the option... :");
+                opt2 = sc.nextInt();
+                if (opt2 == 1) {
+                    if (opt1 == 1)
+                        d.assign();
+                    if (opt1 == 2)
+                        d.display();
+                    if (opt1 == 3)
+                        d.raiseSalary();
+                    if (opt1 == 4)
+                        d.access();
 
+                }
+                if (opt2 == 2) {
+                    if (opt1 == 1)
+                        c.assign();
+                    if (opt1 == 2)
+                        c.display();
+                    if (opt1 == 3)
+                        c.raiseSalary();
+                    if (opt1 == 4)
+                        c.access();
+
+
+                }
+                if (opt2 == 3) {
+                    if (opt1 == 1)
+                        m.assign();
+                    if (opt1 == 2)
+                        m.display();
+                    if (opt1 == 4)
+                        m.access();
+
+                }
+                if (opt2 == 4) {
+                    if (opt1 == 1)
+                        t.assign();
+                    if (opt1 == 2)
+                        t.display();
+                    if (opt1 == 3)
+                        t.raiseSalary();
+                    if (opt1 == 4)
+                        t.access();
+
+
+                }
+                if (opt2 == 5) {
+                    System.out.println("Thanks a lot!");
+                }
             }
-            if(opt2 == 2){
-                if(opt1==1)
-                    c.assign();
-                if(opt1==2)
-                    c.display();
-                if(opt1==3)
-                    c.raiseSalary();
-                if(opt1==4)
-                    c.access();
-
-
-            }
-            if(opt2 == 3){
-                if(opt1==1)
-                    m.assign();
-                if(opt1==2)
-                    m.display();
-                if(opt1==4)
-                    m.access();
-
-            }
-            if(opt2 == 4){
-                if(opt1==1)
-                    t.assign();
-                if(opt1==2)
-                    t.display();
-                if(opt1==3)
-                    t.raiseSalary();
-                if(opt1==4)
-                    t.access();
-
-
-            }
-            if(opt2== 5){
-                System.out.println("Thanks a lot!");
-            }
+        }
+        catch(Exception e){
+            System.out.println("Choose valid option please...");
         }
     }
 }
