@@ -1,4 +1,4 @@
-import java.util.Scanner;
+import java.util.*;
 interface Company{
     void access();
     //In java 8 default/static methods are allowed in interface instead of just being abstract methods
@@ -25,6 +25,7 @@ abstract class Emp{
         return this.designation;
     }
     void assign(){
+
         System.out.print("Enter Id:");
         id=sc.nextInt();
 
@@ -124,10 +125,19 @@ final class Tester extends Emp implements Company{
 
 class project{
 
-    static Developer d= new Developer();
-    static Clerk c= new Clerk();
-    static Manager m= new Manager();
-    static Tester t= new Tester();
+
+    static int d=0;
+    static int c=0;
+    static int m=0;
+    static int t=0;
+    static Developer da[]=new Developer[5];
+    static Clerk ca[]= new Clerk[5];
+    static Manager ma[]= new Manager[5];
+    static Tester ta[]= new Tester[5];
+//    static Developer d= new Developer();
+//    static Clerk c= new Clerk();
+//    static Manager m= new Manager();
+//    static Tester t= new Tester();
 
     public static void main(String[] args){
         try{
@@ -190,46 +200,96 @@ class project{
                 System.out.print("Choose the option... :");
                 opt2 = sc.nextInt();
                 if (opt2 == 1) {
-                    if (opt1 == 1)
-                        d.assign();
-                    if (opt1 == 2)
-                        d.display();
+                    if (opt1 == 1){
+
+                        if(d==5){
+                            System.out.println(" ");
+                            System.out.println("i need Space bro");
+                        }else{
+                            da[d]=new Developer();
+                            da[d].assign();
+                            d++;
+                        }
+
+                    }
+                    if (opt1 == 2){
+                        for(int dis=0;dis<5;dis++){
+                            da[dis].display();
+                        }
+                    }
                     if (opt1 == 3)
-                        d.raiseSalary();
+                        for(int rs=0;rs<5;rs++)
+                            da[rs].raiseSalary();
                     if (opt1 == 4)
-                        d.access();
+                        da[0].access();
 
                 }
                 if (opt2 == 2) {
-                    if (opt1 == 1)
-                        c.assign();
+                    if (opt1 == 1){
+                        if(c==5){
+                            System.out.println(" ");
+                            System.out.println("i need Space bro");
+                        }else{
+                            ca[c]=new Clerk();
+                            ca[c].assign();
+                            c++;
+                        }
+
+                    }
                     if (opt1 == 2)
-                        c.display();
+                        for(int dis=0;dis<5;dis++){
+                            ca[dis].display();
+                        }
                     if (opt1 == 3)
-                        c.raiseSalary();
+                        for(int rs=0;rs<5;rs++)
+                            ca[rs].raiseSalary();
                     if (opt1 == 4)
-                        c.access();
-
-
+                        ca[0].access();
                 }
                 if (opt2 == 3) {
-                    if (opt1 == 1)
-                        m.assign();
+                    if (opt1 == 1){
+                        if(m==5){
+                            System.out.println(" ");
+                            System.out.println("i need Space bro");
+                        }
+                        else{
+                            ma[m].assign();
+                            ma[m]=new Manager();
+                            m++;
+                        }
+                    }
                     if (opt1 == 2)
-                        m.display();
+                        for(int dis=0;dis<5;dis++){
+                            ma[dis].display();
+                        }
+                    if(opt1 == 3)
+                        for(int rs=0;rs<5;rs++)
+                            ma[rs].raiseSalary();
                     if (opt1 == 4)
-                        m.access();
+                        ma[0].access();
 
                 }
                 if (opt2 == 4) {
-                    if (opt1 == 1)
-                        t.assign();
+                    if (opt1 == 1){
+                        if(t==5){
+                            System.out.println(" ");
+                            System.out.println("i need Space bro");
+                        }
+                        else{
+                            ta[t].assign();
+                            ta[t]=new Tester();
+                            t++;
+                        }
+                    }
                     if (opt1 == 2)
-                        t.display();
+                        for(int dis=0;dis<5;dis++){
+                            ta[dis].display();
+                        }
                     if (opt1 == 3)
-                        t.raiseSalary();
+                        for(int rs=0;rs<5;rs++)
+                            ta[rs].raiseSalary();
                     if (opt1 == 4)
-                        t.access();
+                        ta[0].access();
 
 
                 }
