@@ -1,5 +1,6 @@
 import java.util.* ;
-class multiThreadingClass extends Thread{
+class multiThreadingClass implements Runnable{
+    // runnable is the interface, and in this case we have to override the run method compulsory.
     public synchronized void run(){
         //by using synchronized it will avoid collision of threads
         //control the access of multiple threads at a single time

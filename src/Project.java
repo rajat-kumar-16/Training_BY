@@ -9,7 +9,7 @@ abstract class Emp{
     public int id,age;
     public String name;
     private float salary;
-    private String designation;
+    private StringBuffer designation =new StringBuffer();
     int raise;
 
     void setSalary(float salary){
@@ -19,10 +19,11 @@ abstract class Emp{
        return this.salary;
     }
     void setDesignation(String designation){
-        this.designation=designation;
+        StringBuffer s1=new StringBuffer(designation);
+        this.designation=s1;
     }
     String getDesignation(){
-        return this.designation;
+        return this.designation.toString();
     }
     void assign(){
 
@@ -59,6 +60,7 @@ final class Developer extends Emp implements Company{
 
     Developer(){
         setSalary(50000);
+
         setDesignation("Developer");
         raise=15;
     }
