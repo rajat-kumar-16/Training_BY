@@ -1,6 +1,4 @@
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.Statement;
+import javax.lang.model.type.NullType;
 import java.util.*;
 import java.sql.*;
 interface Company{
@@ -54,18 +52,20 @@ abstract class Emp{
 
         }
     }
-    boolean displayById(int did){
+    boolean displayById(int did,StringBuffer designation){
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection con= DriverManager.getConnection("jdbc:mysql://localhost:3306/BlueYonder","root","root");
-            PreparedStatement pstmt=con.prepareStatement("Select * from employee where id = ?");
+            PreparedStatement pstmt=con.prepareStatement("Select * from employee where id = ? and designation = ?");
             pstmt.setInt(1,did);
+            pstmt.setString(2,designation.toString());
             ResultSet rs=pstmt.executeQuery();
             System.out.println(" ");
             ResultSetMetaData r1 = rs.getMetaData();
             int size=0;
-            PreparedStatement pstmttmp=con.prepareStatement("Select * from employee where id = ? ");
+            PreparedStatement pstmttmp=con.prepareStatement("Select * from employee where id = ? and designation = ?");
             pstmttmp.setInt(1,did);
+            pstmttmp.setString(2,designation.toString());
             ResultSet rstmp=pstmttmp.executeQuery();
             while(rstmp.next()){
                 size++;
@@ -89,7 +89,6 @@ abstract class Emp{
         return true;
     }
     void display(){
-
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection con= DriverManager.getConnection("jdbc:mysql://localhost:3306/BlueYonder","root","root");
@@ -146,14 +145,15 @@ abstract class Emp{
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection con= DriverManager.getConnection("jdbc:mysql://localhost:3306/BlueYonder","root","root");
-            PreparedStatement pstmt=con.prepareStatement("Delete from employee where id = ? ");
+            PreparedStatement pstmt=con.prepareStatement("Delete from employee where id = ? and designation = ?");
             System.out.print("Enter the id you want to delete: ");
             int did =sc.nextInt();
-            if(!displayById(did)){
+            if(!displayById(did , designation)){
                 return;
             }
             System.out.print("Are you sure   ");
             pstmt.setInt(1,did);
+            pstmt.setString(2,designation.toString());
             String resp=sc.next();
             if(resp.equalsIgnoreCase("Y") || resp.equalsIgnoreCase("yes"))
                 pstmt.execute();
@@ -163,7 +163,6 @@ abstract class Emp{
     }
 }
 final class Developer extends Emp implements Company{
-
     Developer(){
         setSalary(50000);
 
@@ -171,7 +170,6 @@ final class Developer extends Emp implements Company{
     }
 }
 final class Clerk extends Emp implements Company{
-
     Clerk() {
         setSalary(10000);
         setDesignation("Clerk");
@@ -191,18 +189,14 @@ final class Tester extends Emp implements Company{
     }
 }
 class project{
-    static ArrayList<Employee> emp = new ArrayList<Employee>();
-    static Developer d=new Developer();
-    static Clerk c= new Clerk();
-    static Manager m= new Manager();
-    static Tester t= new Tester();
-//    static Developer d= new Developer();
-//    static Clerk c= new Clerk();
-//    static Manager m= new Manager();
-//    static Tester t= new Tester();
-
+    static ArrayList<Emp> employee = new ArrayList<>();
     public static void main(String[] args){
         try{
+            employee.add(null);
+            employee.add(new Clerk());
+            employee.add(new Developer());
+            employee.add(new Manager());
+            employee.add(new Tester());
             int opt1=0;
             Scanner sc= new Scanner(System.in);
             while(opt1!=5){
@@ -262,52 +256,84 @@ class project{
                 System.out.print("Choose the option... :");
                 opt2 = sc.nextInt();
                 if (opt2 == 1) {
+                    Iterator<Emp> i = employee.iterator();
+                    Object dev=i.next();
+                    while(i.hasNext()){
+                        dev = i.next();
+                        if(dev instanceof Developer){
+                            break;
+                        }
+                    }
                     if (opt1 == 1){
-                        d.assign();
+                        ((Developer) dev).assign();
                     }
                     if (opt1 == 2){
-                        d.display();
+                        ((Developer) dev).display();
                     }
                     if (opt1 == 3)
-                        d.updateSalary();
+                        ((Developer) dev).updateSalary();
                     if (opt1 == 4)
-                        d.delete();
+                        ((Developer) dev).delete();
                 }
                 if (opt2 == 2) {
-                    if (opt1 == 1){
-                        c.assign();
+                    Iterator<Emp> i = employee.iterator();
+                    Object clk=i.next();
+                    while(i.hasNext()){
+                        clk = i.next();
+                        if(clk instanceof Clerk){
+                            break;
+                        }
                     }
-                    if (opt1 == 2)
-                        c.display();
+                    if (opt1 == 1){
+                        ((Clerk) clk).assign();
+                    }
+                    if (opt1 == 2){
+                        ((Clerk) clk).display();
+                    }
                     if (opt1 == 3)
-                        c.updateSalary();
+                        ((Clerk) clk).updateSalary();
                     if (opt1 == 4)
-                        c.delete();
+                        ((Clerk) clk).delete();
                 }
                 if (opt2 == 3) {
-                    if (opt1 == 1){
-                        m.assign();
+                    Iterator<Emp> i = employee.iterator();
+                    Object mng=i.next();
+                    while(i.hasNext()){
+                        mng = i.next();
+                        if(mng instanceof Manager){
+                            break;
+                        }
                     }
-                    if (opt1 == 2)
-                        m.display();
-                    if(opt1 == 3)
-                        m.updateSalary();
+                    if (opt1 == 1){
+                        ((Manager) mng).assign();
+                    }
+                    if (opt1 == 2){
+                        ((Manager) mng).display();
+                    }
+                    if (opt1 == 3)
+                        ((Manager) mng).updateSalary();
                     if (opt1 == 4)
-                        m.delete();
-
+                        ((Manager) mng).delete();
                 }
                 if (opt2 == 4) {
-                    if (opt1 == 1){
-                        t.assign();
+                    Iterator<Emp> i = employee.iterator();
+                    Object tsr=i.next();
+                    while(i.hasNext()){
+                        tsr = i.next();
+                        if(tsr instanceof Tester){
+                            break;
+                        }
                     }
-                    if (opt1 == 2)
-                        t.display();
+                    if (opt1 == 1){
+                        ((Tester) tsr).assign();
+                    }
+                    if (opt1 == 2){
+                        ((Tester) tsr).display();
+                    }
                     if (opt1 == 3)
-                        t.updateSalary();
+                        ((Tester) tsr).updateSalary();
                     if (opt1 == 4)
-                        t.delete();
-
-
+                        ((Tester) tsr).delete();
                 }
                 if (opt2 == 5) {
                     System.out.println("Thanks a lot!");
@@ -315,6 +341,7 @@ class project{
             }
         }
         catch(Exception e){
+            System.out.println(e);
             System.out.println("Choose valid option please...");
         }
     }
