@@ -1,11 +1,11 @@
-package JDBC;
-
-import java.sql.*;
+package database_connections;
 import java.util.Scanner;
-import javax.net.*;
-class jdbc_connection{
+import java.sql.*;
+
+class jdbc_connection_insert{
     public static void main(String args[]){
         try{
+            Scanner sc =new Scanner(System.in);
             //mysql
             /*
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -14,7 +14,7 @@ class jdbc_connection{
 //            stmt.execute("insert into Employee values(200, 'Mahesh',25,40000,'Tester')");
             //execute for static query
             PreparedStatement dstmt = con.prepareStatement("insert into Employee values(?,?,?,?,?)");
-            Scanner sc =new Scanner(System.in);
+
             System.out.println("Enter Id:"); int id = sc.nextInt();
             System.out.println("Enter Name:"); String name = sc.next();
             System.out.println("Enter Age:"); int age = sc.nextInt();
@@ -50,8 +50,22 @@ class jdbc_connection{
             Connection consql=DriverManager.getConnection("jdbc:sqlserver://localhost:1433;databaseName=blueyonder;encrypt=true;trustServerCertificate=true","Rajat","RAJATkumar@123");
 //            Connection consql = DriverManager.getConnection("jdbc:sqlserver://localhost:1433;encrypt=true;databaseName=blueyonder;integratedSecurity=true;trustServerCertificate=true;");
             Statement pstmt =consql.createStatement();
-            pstmt.execute("insert into Employee values(300, 'rajat',27,30000,'Clerk')");
+                            // insert
+//            pstmt.execute("insert into Employee values(300, 'rajat',27,30000,'Clerk')");
+                            //update
+//            pstmt.execute("update Employee set salary = 100000 where id = 300");
+                            //delete
+            PreparedStatement ppstmt = consql.prepareStatement("Delete from Employee where id = ?");
+            System.out.print("Enter the id you want to delete: ");
+            int id=sc.nextInt();
+            System.out.println("are you sure?");
+            String ch=sc.next();
+            if(ch.equalsIgnoreCase("Y") || ch.equalsIgnoreCase("yes")){
+                ppstmt.setInt(1,id);
+                ppstmt.execute();
+            }
             pstmt.close();
+            ppstmt.close();
             consql.close();
             System.out.println("Great Job man!");
 

@@ -1,3 +1,4 @@
+package p;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
@@ -8,27 +9,12 @@ interface Company{
     String Company_name="Blue Yonder"; // by default, it is public static final
 }
 abstract class Emp{
-    Scanner sc= new Scanner(System.in);
+    static Scanner sc= new Scanner(System.in);
     public int id,age;
     public String name;
-    private float salary;
+    private static float salary;
     private StringBuffer designation =new StringBuffer();
-
-    void setSalary(float salary){
-        this.salary=salary;
-    }
-    float getSalary(){
-        return this.salary;
-    }
-    void setDesignation(String designation){
-        StringBuffer s1=new StringBuffer(designation);
-        this.designation=s1;
-    }
-    String getDesignation(){
-        return this.designation.toString();
-    }
-    void assign(){
-
+    Emp(int salary, String designation){
         try{
             Scanner sc =new Scanner(System.in);
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -49,9 +35,7 @@ abstract class Emp{
             pstmt.execute();
             pstmt.close();
             con.close();
-
         }catch(Exception e) {
-
         }
     }
     boolean displayById(int did){
@@ -88,7 +72,7 @@ abstract class Emp{
         }
         return true;
     }
-    void display(){
+    public static void display(StringBuffer designation){
 
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -122,7 +106,7 @@ abstract class Emp{
         }catch(Exception e){
         }
     }
-    void updateSalary(){
+    static void updateSalary(){
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection con= DriverManager.getConnection("jdbc:mysql://localhost:3306/BlueYonder","root","root");
@@ -138,8 +122,8 @@ abstract class Emp{
             pstmt.execute();
             pstmt.close();
         }catch(Exception e){
+            System.out.println(e);
         }
-        // to stop the increasing, also it will be 0 for certain child.
     }
 
     void delete(){
@@ -165,37 +149,29 @@ abstract class Emp{
 final class Developer extends Emp implements Company{
 
     Developer(){
-        setSalary(50000);
-
-        setDesignation("Developer");
+        super(50000, "Developer");
     }
 }
 final class Clerk extends Emp implements Company{
 
     Clerk() {
-        setSalary(10000);
-        setDesignation("Clerk");
+        super(10000,"Clerk");
     }
 }
 final class Manager extends Emp implements Company{
 
     Manager(){
-        setSalary(70000);
-        setDesignation("Manager");
+        super(70000,"Manager");
     }
 }
 final class Tester extends Emp implements Company{
     Tester(){
-        setSalary(25000);
-        setDesignation("Tester");
+        super(25000,"Tester");
     }
 }
 class project{
-    static ArrayList<Employee> emp = new ArrayList<Employee>();
-    static Developer d=new Developer();
-    static Clerk c= new Clerk();
-    static Manager m= new Manager();
-    static Tester t= new Tester();
+    static ArrayList<Emp> employee  = new ArrayList<Emp>();
+
 //    static Developer d= new Developer();
 //    static Clerk c= new Clerk();
 //    static Manager m= new Manager();
@@ -220,7 +196,7 @@ class project{
                     CreateDisplay(opt1);
                 }
                 if(opt1 == 3){
-                    CreateDisplay(opt1);
+                    Emp.updateSalary();
                 }
                 if(opt1 == 4){
                     CreateDisplay(opt1);
@@ -248,10 +224,6 @@ class project{
                     System.out.println("Options for Create:");
                 if (opt1 == 2)
                     System.out.println("Options for Display:");
-                if (opt1 == 3)
-                    System.out.println("Options for Update Salary:");
-                if (opt1 == 4)
-                    System.out.println("Options for Delete:");
 
                 System.out.println("1) Developer");
                 System.out.println("2) Clerk");
@@ -263,51 +235,39 @@ class project{
                 opt2 = sc.nextInt();
                 if (opt2 == 1) {
                     if (opt1 == 1){
-                        d.assign();
+                        employee.add(new Developer());
                     }
                     if (opt1 == 2){
-                        d.display();
+                        StringBuffer designation = new StringBuffer("Developer");
+                        Emp.display(designation);
                     }
-                    if (opt1 == 3)
-                        d.updateSalary();
-                    if (opt1 == 4)
-                        d.delete();
                 }
                 if (opt2 == 2) {
                     if (opt1 == 1){
-                        c.assign();
+                        employee.add(new Clerk());
                     }
-                    if (opt1 == 2)
-                        c.display();
-                    if (opt1 == 3)
-                        c.updateSalary();
-                    if (opt1 == 4)
-                        c.delete();
+                    if (opt1 == 2){
+                        StringBuffer designation = new StringBuffer("Clerk");
+                        Emp.display(designation);
+                    }
                 }
                 if (opt2 == 3) {
                     if (opt1 == 1){
-                        m.assign();
+                        employee.add(new Manager());
                     }
-                    if (opt1 == 2)
-                        m.display();
-                    if(opt1 == 3)
-                        m.updateSalary();
-                    if (opt1 == 4)
-                        m.delete();
-
+                    if (opt1 == 2){
+                        StringBuffer designation = new StringBuffer("Manager");
+                        Emp.display(designation);
+                    }
                 }
                 if (opt2 == 4) {
                     if (opt1 == 1){
-                        t.assign();
+                        employee.add(new Tester());
                     }
-                    if (opt1 == 2)
-                        t.display();
-                    if (opt1 == 3)
-                        t.updateSalary();
-                    if (opt1 == 4)
-                        t.delete();
-
-
+                    if (opt1 == 2){
+                        StringBuffer designation = new StringBuffer("Tester");
+                        Emp.display(designation);
+                    }
                 }
                 if (opt2 == 5) {
                     System.out.println("Thanks a lot!");
@@ -315,7 +275,7 @@ class project{
             }
         }
         catch(Exception e){
-            System.out.println("Choose valid option please...");
+            System.out.println(e);
         }
     }
 }
