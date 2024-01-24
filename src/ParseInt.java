@@ -5,6 +5,5 @@ class ParseInt{
         System.out.println(a);
         System.out.println(b);
         int c=Integer.parseInt(a)+Integer.parseInt(b);
-
     }
 }
